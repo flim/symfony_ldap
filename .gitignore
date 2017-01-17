@@ -67,3 +67,8 @@ fabric.properties
 # *.ipr
 
 # End of https://www.gitignore.io/api/phpstorm
+.idea/
+app/SymfonyRequirements.php
+app/cache/
+app/logs/
+app/sqlite.db
