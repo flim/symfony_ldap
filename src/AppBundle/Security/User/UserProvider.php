@@ -13,13 +13,17 @@ namespace AppBundle\Security\User;
 
 use AppBundle\Entity\User;
 use FOS\UserBundle\Doctrine\UserManager;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Ldap\Exception\ConnectionException;
 use Symfony\Component\Ldap\LdapClientInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
+/**
+ * Class UserProvider
+ *
+ * @package AppBundle\Security\User
+ */
 class UserProvider implements UserProviderInterface
 {
     private $userManager;
@@ -45,7 +49,7 @@ class UserProvider implements UserProviderInterface
                                 $baseDn,
                                 $searchDn = null,
                                 $searchPassword = null,
-                                array $defaultRoles = array(),
+                                array $defaultRoles = [],
                                 $uidKey = 'sAMAccountName',
                                 $filter = '({uid_key}={username})')
     {
@@ -98,6 +102,11 @@ class UserProvider implements UserProviderInterface
         return $this->loadUser($user['cn'], $user);
     }
 
+    /**
+     * @param $username
+     * @param $user
+     * @return User|\FOS\UserBundle\Model\UserInterface
+     */
     public function loadUser($username, $user)
     {
         $roles = $this->defaultRoles;
@@ -110,6 +119,7 @@ class UserProvider implements UserProviderInterface
             $userObject->setEmailCanonical(strtolower($user['mail']));
             $userObject->setRoles($roles);
             $userObject->setPassword(md5(uniqid($user['cn'])));
+            $userObject->setEnabled(true);
         }
 
         return $userObject;

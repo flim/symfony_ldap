@@ -20,5 +20,3 @@ services:
             - "%ldap_uid_key%"
             - "%ldap_search_filter%"
 
-    app.user_checker:
-        class: AppBundle\Security\User\UserChecker
