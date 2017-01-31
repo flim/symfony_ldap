@@ -1,22 +1,2 @@
 services:
-    ldap:
-        class: Symfony\Component\Ldap\LdapClient
-        arguments:
-            - "%ldap_host%"     # host
-            - "%ldap_port%"     # port
-            - "%ldap_version%"  # version
-            - "%ldap_ssl%"      # SSL
-            - "%ldap_tls%"      # TLS
-
-    app.user_provider:
-        class: AppBundle\Security\User\UserProvider
-        arguments:
-            - "@fos_user.user_manager"
-            - "@ldap"
-            - "%ldap_base_dn%"
-            - "%ldap_search_dn%"
-            - "%ldap_search_password%"
-            - "%ldap_default_roles%"
-            - "%ldap_uid_key%"
-            - "%ldap_search_filter%"
 

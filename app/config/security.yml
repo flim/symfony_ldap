@@ -7,8 +7,8 @@ security:
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     providers:
-        app.provider:
-            id: app.user_provider
+        fos_userbundle:
+            id: fos_user.user_provider.username
 
     firewalls:
         dev:
@@ -16,11 +16,9 @@ security:
             security: false
 
         main:
-            anonymous: ~
-            form_login_ldap:
-                provider: app.provider
-                service: ldap
-                dn_string: "%ldap_dn_string%"
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
             logout:       true
             anonymous:    true
